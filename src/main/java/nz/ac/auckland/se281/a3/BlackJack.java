@@ -119,6 +119,8 @@ public class BlackJack {
 		// update strategy here?
 		int bestNetWins = 0;
 		Hand topWinner = null;
+
+		// find the player with the highest net wins
 		for (Player player : players) {
 			if (player.getNetWins() > bestNetWins) {
 				bestNetWins = player.getNetWins();
@@ -126,60 +128,61 @@ public class BlackJack {
 			}
 		}
 
+		// if the highest net wins is 2 or greater, set the strategy to target the top
+		// winner
 		if (bestNetWins >= 2) {
 			DealerStrategy strategy = new TopWinnerStrategy();
 			dealer.setPlayerHand(topWinner);
 			dealer.setStrategy(strategy);
-			System.out.println("Topwinner: " + topWinner);
-			System.out.println("TWS");
-		} else {
+//			System.out.println("Topwinner: " + topWinner);
+//			System.out.println("TWS");
+		}
+		// otherwise set the strategy to target the highest bidder
+		else {
 			DealerStrategy strategy = new HighestBidderStrategy();
 			dealer.setStrategy(strategy);
-			System.out.println("HBS");
+//			System.out.println("HBS");
 		}
 
 	}
 
+	// function to get the winner of the round
 	public void getRoundWinner(List<Player> players) {
 //		this.players = players;
 
 		// this does not account for if two players win so both will need a score of +1
 //		List<Player> roundWinners;
 		int highestScore = 0;
+
+		// loop through the players to get the highest score
 		for (Player player : players) {
 			if ((player.getHand().getScore() > highestScore) && (player.getHand().getScore() <= 21)) {
 				highestScore = player.getHand().getScore();
 			}
+			// assume that all players lost so -1 from all net wins
 			player.setNetWins(player.getNetWins() - 1);
 //			System.out.println("rwWins: " + player.getNetWins());
 		}
 
-		if (dealer.getDealerHand().getScore() == 21) {
+		// conditionals to adjust net wins
+		if ((dealer.getDealerHand().getScore() == 21) || (highestScore == 0)
+				|| (dealer.getDealerHand().getScore() >= highestScore && dealer.getDealerHand().getScore() < 21)) {
 			return;
 		} else if (dealer.getDealerHand().getScore() > 21) {
 			for (Player player : players) {
 				player.setNetWins(player.getNetWins() + 2);
 			}
 			return;
-		} else if (dealer.getDealerHand().getScore() >= highestScore) {
-			return;
-		} else if (highestScore == 0) {
-			// if all players are busted, then the dealer wins
-			return;
 		} else {
 			// if the dealer busts, all wins
 			// adjust for all losing
 			for (Player player : players) {
-
 				if ((player.getHand().getScore() == highestScore)) {
 					player.setNetWins(player.getNetWins() + 2);
 					System.out.println("rwWins: " + player.getNetWins());
 				}
-				// player.setNetWins(player.getNetWins() - 1);
 			}
 		}
-//		roundWinner.setNetWins(roundWinner.getNetWins() + 2);
-//		System.out.println("rwWins: " + roundWinner.getNetWins());
 
 		return;
 
