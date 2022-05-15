@@ -17,6 +17,7 @@ public class Dealer extends Participant {
 	private DealerStrategy strategy;
 	private List<Player> players;
 	private Hand playerHand;
+	private Hand dealerHand;
 
 	public Dealer(String name, DealerStrategy strategy, List<Player> players) {
 		super(name);
@@ -26,6 +27,8 @@ public class Dealer extends Participant {
 
 	@Override
 	public Action decideAction(Hand dealerHand) {
+
+		this.dealerHand = dealerHand;
 
 		if (strategy instanceof HighestBidderStrategy) {
 			playerHand = getHighestBet();
@@ -73,6 +76,11 @@ public class Dealer extends Participant {
 			}
 		}
 		return topWinner;
+	}
+
+	public Hand getDealerHand() {
+		// TODO Auto-generated method stub
+		return this.getHand();
 	}
 
 }

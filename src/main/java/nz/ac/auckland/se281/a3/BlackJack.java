@@ -140,7 +140,7 @@ public class BlackJack {
 
 	}
 
-	public Player getRoundWinner(List<Player> players) {
+	public void getRoundWinner(List<Player> players) {
 //		this.players = players;
 
 		// this does not account for if two players win so both will need a score of +1
@@ -151,11 +151,25 @@ public class BlackJack {
 				highestScore = player.getHand().getScore();
 			}
 			player.setNetWins(player.getNetWins() - 1);
+//			System.out.println("rwWins: " + player.getNetWins());
 		}
 
+		if (dealer.getDealerHand().getScore() == 21) {
+			return;
+		} else if (dealer.getDealerHand().getScore() > 21) {
+			for (Player player : players) {
+				player.setNetWins(player.getNetWins() + 2);
+			}
+			return;
+		}
+
+		// if the dealer busts, all wins
+		// adjust for all losing
 		for (Player player : players) {
+
 			if ((player.getHand().getScore() == highestScore)) {
 				player.setNetWins(player.getNetWins() + 2);
+				System.out.println("rwWins: " + player.getNetWins());
 			}
 			// player.setNetWins(player.getNetWins() - 1);
 		}
@@ -163,7 +177,7 @@ public class BlackJack {
 //		roundWinner.setNetWins(roundWinner.getNetWins() + 2);
 //		System.out.println("rwWins: " + roundWinner.getNetWins());
 
-		return null;
+		return;
 
 	}
 
