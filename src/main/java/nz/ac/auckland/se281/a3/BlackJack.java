@@ -130,7 +130,7 @@ public class BlackJack {
 			DealerStrategy strategy = new TopWinnerStrategy();
 			dealer.setPlayerHand(topWinner);
 			dealer.setStrategy(strategy);
-			System.out.println("Topwinner: " + topWinner.getScore());
+			System.out.println("Topwinner: " + topWinner);
 			System.out.println("TWS");
 		} else {
 			DealerStrategy strategy = new HighestBidderStrategy();
@@ -142,19 +142,28 @@ public class BlackJack {
 
 	public Player getRoundWinner(List<Player> players) {
 //		this.players = players;
-		Player roundWinner = players.get(0);
-		for (Player player : players) {
-			if (player.getHand().getScore() > roundWinner.getHand().getScore() && player.getHand().getScore() <= 21) {
-				roundWinner = player;
 
+		// this does not account for if two players win so both will need a score of +1
+//		List<Player> roundWinners;
+		int highestScore = 0;
+		for (Player player : players) {
+			if ((player.getHand().getScore() > highestScore) && (player.getHand().getScore() <= 21)) {
+				highestScore = player.getHand().getScore();
 			}
 			player.setNetWins(player.getNetWins() - 1);
 		}
 
-		roundWinner.setNetWins(roundWinner.getNetWins() + 2);
-		System.out.println("rwWins: " + roundWinner.getNetWins());
+		for (Player player : players) {
+			if ((player.getHand().getScore() == highestScore)) {
+				player.setNetWins(player.getNetWins() + 2);
+			}
+			// player.setNetWins(player.getNetWins() - 1);
+		}
 
-		return roundWinner;
+//		roundWinner.setNetWins(roundWinner.getNetWins() + 2);
+//		System.out.println("rwWins: " + roundWinner.getNetWins());
+
+		return null;
 
 	}
 
