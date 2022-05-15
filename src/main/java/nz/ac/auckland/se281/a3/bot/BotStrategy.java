@@ -8,6 +8,6 @@ public interface BotStrategy {
 
 	Action decideAction();
 
-	Action makeABet();
+	public int makeABet();
 
 }

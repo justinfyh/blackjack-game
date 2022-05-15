@@ -22,9 +22,10 @@ public class RandomStrategy implements BotStrategy {
 	}
 
 	@Override
-	public Action makeABet() {
+	public int makeABet() {
 		// TODO Auto-generated method stub
-		return null;
+		float randomNumber = new Random().nextFloat();
+		return (int) (randomNumber * 100);
 	}
 
 }

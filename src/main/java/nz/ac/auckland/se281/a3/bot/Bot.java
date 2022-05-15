@@ -26,7 +26,7 @@ public class Bot extends Player {
 
 	@Override
 	public int makeABet() {
-		return 1;
+		return strategy.makeABet();
 	}
 
 }
