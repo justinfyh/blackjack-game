@@ -146,8 +146,12 @@ public class BlackJack {
 
 		// PRINT ROUND STATS
 		for (Player player : players) {
-			System.out.println(
-					"Round " + round + ": " + player.getName() + " won " + player.getHand().getBet() + " chips");
+			String winLose = "lost";
+			if (player.isWinStatus()) {
+				winLose = "won";
+			}
+			System.out.println("Round " + round + ": " + player.getName() + " " + winLose + " "
+					+ player.getHand().getBet() + " chips");
 		}
 
 	}
@@ -167,6 +171,7 @@ public class BlackJack {
 			}
 			// assume that all players lost so -1 from all net wins
 			player.setNetWins(player.getNetWins() - 1);
+			player.setWinStatus(false);
 //			System.out.println("rwWins: " + player.getNetWins());
 		}
 
@@ -182,14 +187,16 @@ public class BlackJack {
 		} else if (dealer.getDealerHand().getScore() > 21) {
 			for (Player player : players) {
 				player.setNetWins(player.getNetWins() + 2);
+				player.setWinStatus(true);
 			}
 			return;
 		} else {
 			// if the dealer busts, all wins
 			// adjust for all losing
 			for (Player player : players) {
-				if ((player.getHand().getScore() == highestScore)) {
+				if ((player.getHand().getScore() == highestScore) && (dealer.getDealerHand().getScore() != 21)) {
 					player.setNetWins(player.getNetWins() + 2);
+					player.setWinStatus(true);
 					System.out.println("rwWins: " + player.getNetWins());
 				}
 			}

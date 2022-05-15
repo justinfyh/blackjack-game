@@ -11,6 +11,15 @@ public abstract class Player extends Participant {
 
 	private int netWins;
 	private List<Player> players;
+	private boolean winStatus;
+
+	public boolean isWinStatus() {
+		return winStatus;
+	}
+
+	public void setWinStatus(boolean winStatus) {
+		this.winStatus = winStatus;
+	}
 
 	public Player(String name) {
 		super(name);
