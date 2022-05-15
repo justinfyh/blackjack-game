@@ -9,6 +9,7 @@ import nz.ac.auckland.se281.a3.bot.StrategyFactory;
 import nz.ac.auckland.se281.a3.dealer.Dealer;
 import nz.ac.auckland.se281.a3.dealer.DealerStrategy;
 import nz.ac.auckland.se281.a3.dealer.HighestBidderStrategy;
+import nz.ac.auckland.se281.a3.dealer.TopWinnerStrategy;
 
 /**
  * Unless it is specified in the JavaDoc, you cannot change any methods.
@@ -112,6 +113,23 @@ public class BlackJack {
 	 * change this method for Task 2 and Task 3
 	 */
 	protected void printAndUpdateResults(int round) {
+
+		// update strategy here?
+		int bestNetWins = 0;
+		for (Player player : players) {
+			if (player.getNetWins() > bestNetWins) {
+				bestNetWins = player.getNetWins();
+			}
+
+		}
+
+		if (bestNetWins > 2) {
+			DealerStrategy strategy = new TopWinnerStrategy();
+			dealer.setStrategy(strategy);
+		} else {
+			DealerStrategy strategy = new HighestBidderStrategy();
+			dealer.setStrategy(strategy);
+		}
 
 		Player roundWinner = Player.getRoundWinner(players);
 

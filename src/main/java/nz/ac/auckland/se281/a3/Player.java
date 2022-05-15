@@ -32,6 +32,14 @@ public abstract class Player extends Participant {
 
 	}
 
+	public int getNetWins() {
+		return netWins;
+	}
+
+	public void setNetWins(int netWins) {
+		this.netWins = netWins;
+	}
+
 	public abstract int makeABet();
 
 }

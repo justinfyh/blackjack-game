@@ -32,6 +32,14 @@ public class Dealer extends Participant {
 		return strategy.decideAction(dealerHand, playerHand);
 	}
 
+	public void setStrategy(DealerStrategy strategy) {
+		this.strategy = strategy;
+	}
+
+	public DealerStrategy getStrategy() {
+		return strategy;
+	}
+
 	private Hand getHighestBet() {
 		// TODO Auto-generated method stub
 		int betHigh = 0;
