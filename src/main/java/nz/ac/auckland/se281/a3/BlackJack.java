@@ -171,6 +171,7 @@ public class BlackJack {
 			}
 			// assume that all players lost so -1 from all net wins
 			player.setNetWins(player.getNetWins() - 1);
+			player.setNumLosses(player.getNumLosses() + 1);
 			player.setWinStatus(false);
 //			System.out.println("rwWins: " + player.getNetWins());
 		}
@@ -187,6 +188,8 @@ public class BlackJack {
 		} else if (dealer.getDealerHand().getScore() > 21) {
 			for (Player player : players) {
 				player.setNetWins(player.getNetWins() + 2);
+				player.setNumLosses(player.getNumLosses() - 1);
+				player.setNumWins(player.getNumWins() + 1);
 				player.setWinStatus(true);
 			}
 			return;
@@ -196,6 +199,8 @@ public class BlackJack {
 			for (Player player : players) {
 				if ((player.getHand().getScore() == highestScore) && (dealer.getDealerHand().getScore() != 21)) {
 					player.setNetWins(player.getNetWins() + 2);
+					player.setNumLosses(player.getNumLosses() - 1);
+					player.setNumWins(player.getNumWins() + 1);
 					player.setWinStatus(true);
 					System.out.println("rwWins: " + player.getNetWins());
 				}
@@ -205,12 +210,18 @@ public class BlackJack {
 		return;
 
 	}
+	// win = rounds - netwins
 
 	/**
 	 * TODO This method should print the statistic of the game when it ends
 	 */
 	protected void printGameStatistics() {
+		for (Player player : players) {
+//			int numLoss = player.getNumWins() - 
 
+			System.out.println(player.getName() + " won " + player.getNumWins() + " times and lost "
+					+ player.getNumLosses() + " times");
+		}
 	}
 
 }

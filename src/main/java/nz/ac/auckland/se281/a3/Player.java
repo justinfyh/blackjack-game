@@ -1,7 +1,5 @@
 package nz.ac.auckland.se281.a3;
 
-import java.util.List;
-
 /**
  * 
  * You can (and should) add new fields and/or methods
@@ -10,8 +8,32 @@ import java.util.List;
 public abstract class Player extends Participant {
 
 	private int netWins;
-	private List<Player> players;
+	private int numLosses;
 	private boolean winStatus;
+	private int numWins;
+
+	// constructor
+	public Player(String name) {
+		super(name);
+		netWins = 0;
+		numWins = 0;
+	}
+
+	public int getNumWins() {
+		return numWins;
+	}
+
+	public void setNumWins(int numWins) {
+		this.numWins = numWins;
+	}
+
+	public int getNumLosses() {
+		return numLosses;
+	}
+
+	public void setNumLosses(int numLosses) {
+		this.numLosses = numLosses;
+	}
 
 	public boolean isWinStatus() {
 		return winStatus;
@@ -19,11 +41,6 @@ public abstract class Player extends Participant {
 
 	public void setWinStatus(boolean winStatus) {
 		this.winStatus = winStatus;
-	}
-
-	public Player(String name) {
-		super(name);
-		netWins = 0;
 	}
 
 	public int getNetWins() {
