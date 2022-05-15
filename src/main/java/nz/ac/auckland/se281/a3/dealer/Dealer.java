@@ -30,15 +30,18 @@ public class Dealer extends Participant {
 
 		this.dealerHand = dealerHand;
 
-		if (strategy instanceof HighestBidderStrategy) {
-			playerHand = getHighestBet();
-		} else {
-			playerHand = getTopWinner();
-		}
-
-//		System.out.println("Highest bet: " + hand);
+		playerHand = strategy.getTargetPlayer(players);
 
 		return strategy.decideAction(dealerHand, playerHand);
+	}
+
+	public DealerStrategy getStrategy() {
+		return strategy;
+	}
+
+	public Hand getDealerHand() {
+		// TODO Auto-generated method stub
+		return this.getHand();
 	}
 
 	public void setPlayerHand(Hand playerHand) {
@@ -49,38 +52,29 @@ public class Dealer extends Participant {
 		this.strategy = strategy;
 	}
 
-	public DealerStrategy getStrategy() {
-		return strategy;
-	}
-
-	private Hand getHighestBet() {
-		// TODO Auto-generated method stub
-		int betHigh = 0;
-		Hand hand = null;
-		for (Player player : players) {
-			if (player.getHand().getBet() > betHigh) {
-				betHigh = player.getHand().getBet();
-				hand = player.getHand();
-			}
-		}
-		return hand;
-	}
-
-	private Hand getTopWinner() {
-		int bestNetWins = 0;
-		Hand topWinner = null;
-		for (Player player : players) {
-			if (player.getNetWins() > bestNetWins) {
-				bestNetWins = player.getNetWins();
-				topWinner = player.getHand();
-			}
-		}
-		return topWinner;
-	}
-
-	public Hand getDealerHand() {
-		// TODO Auto-generated method stub
-		return this.getHand();
-	}
+//	private Hand getHighestBet() {
+//		// TODO Auto-generated method stub
+//		int betHigh = 0;
+//		Hand hand = null;
+//		for (Player player : players) {
+//			if (player.getHand().getBet() > betHigh) {
+//				betHigh = player.getHand().getBet();
+//				hand = player.getHand();
+//			}
+//		}
+//		return hand;
+//	}
+//
+//	private Hand getTopWinner() {
+//		int bestNetWins = 0;
+//		Hand topWinner = null;
+//		for (Player player : players) {
+//			if (player.getNetWins() > bestNetWins) {
+//				bestNetWins = player.getNetWins();
+//				topWinner = player.getHand();
+//			}
+//		}
+//		return topWinner;
+//	}
 
 }
