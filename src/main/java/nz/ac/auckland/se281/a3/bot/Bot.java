@@ -8,8 +8,15 @@ import nz.ac.auckland.se281.a3.Player;
  */
 public class Bot extends Player {
 
-	public Bot(String name) {
+	private BotStrategy strategy;
+
+	public Bot(String name, String botStrategyString) {
 		super(name);
+		this.strategy = botStrategyString;
+	}
+
+	public Action play() {
+		return strategy.play();
 	}
 
 	@Override
