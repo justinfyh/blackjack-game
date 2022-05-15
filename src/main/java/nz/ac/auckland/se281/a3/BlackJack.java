@@ -161,19 +161,23 @@ public class BlackJack {
 				player.setNetWins(player.getNetWins() + 2);
 			}
 			return;
-		}
+		} else if (dealer.getDealerHand().getScore() >= highestScore) {
+			return;
+		} else if (highestScore == 0) {
+			// if all players are busted, then the dealer wins
+			return;
+		} else {
+			// if the dealer busts, all wins
+			// adjust for all losing
+			for (Player player : players) {
 
-		// if the dealer busts, all wins
-		// adjust for all losing
-		for (Player player : players) {
-
-			if ((player.getHand().getScore() == highestScore)) {
-				player.setNetWins(player.getNetWins() + 2);
-				System.out.println("rwWins: " + player.getNetWins());
+				if ((player.getHand().getScore() == highestScore)) {
+					player.setNetWins(player.getNetWins() + 2);
+					System.out.println("rwWins: " + player.getNetWins());
+				}
+				// player.setNetWins(player.getNetWins() - 1);
 			}
-			// player.setNetWins(player.getNetWins() - 1);
 		}
-
 //		roundWinner.setNetWins(roundWinner.getNetWins() + 2);
 //		System.out.println("rwWins: " + roundWinner.getNetWins());
 
