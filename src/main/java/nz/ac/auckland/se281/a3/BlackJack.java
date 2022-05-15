@@ -164,6 +164,11 @@ public class BlackJack {
 //			System.out.println("rwWins: " + player.getNetWins());
 		}
 
+		if (dealer.getDealerHand().getScore() == 21 && highestScore == 21
+				&& dealer.getDealerHand().getCards().size() > 2) {
+			return;
+		}
+
 		// conditionals to adjust net wins
 		if ((dealer.getDealerHand().getScore() == 21) || (highestScore == 0)
 				|| (dealer.getDealerHand().getScore() >= highestScore && dealer.getDealerHand().getScore() < 21)) {
