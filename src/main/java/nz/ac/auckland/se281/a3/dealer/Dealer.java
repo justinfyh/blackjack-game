@@ -10,8 +10,11 @@ import nz.ac.auckland.se281.a3.Participant;
  */
 public class Dealer extends Participant {
 
-	public Dealer(String name) {
+	private DealerStrategy strategy;
+
+	public Dealer(String name, DealerStrategy strategy) {
 		super(name);
+		this.strategy = strategy;
 	}
 
 	@Override

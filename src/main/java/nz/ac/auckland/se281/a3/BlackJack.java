@@ -7,6 +7,8 @@ import nz.ac.auckland.se281.a3.bot.Bot;
 import nz.ac.auckland.se281.a3.bot.BotStrategy;
 import nz.ac.auckland.se281.a3.bot.StrategyFactory;
 import nz.ac.auckland.se281.a3.dealer.Dealer;
+import nz.ac.auckland.se281.a3.dealer.DealerStrategy;
+import nz.ac.auckland.se281.a3.dealer.HighestBidderStrategy;
 
 /**
  * Unless it is specified in the JavaDoc, you cannot change any methods.
@@ -101,7 +103,8 @@ public class BlackJack {
 	 */
 	protected void initDealer() {
 		// set the initial strategy using the Strategy pattern
-		dealer = new Dealer("Dealer");
+		DealerStrategy strategy = new HighestBidderStrategy();
+		dealer = new Dealer("Dealer", strategy);
 	}
 
 	/**
