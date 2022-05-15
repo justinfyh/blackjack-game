@@ -144,6 +144,12 @@ public class BlackJack {
 //			System.out.println("HBS");
 		}
 
+		// PRINT ROUND STATS
+		for (Player player : players) {
+			System.out.println(
+					"Round " + round + ": " + player.getName() + " won " + player.getHand().getBet() + " chips");
+		}
+
 	}
 
 	// function to get the winner of the round
@@ -170,7 +176,7 @@ public class BlackJack {
 		}
 
 		// conditionals to adjust net wins
-		if ((dealer.getDealerHand().getScore() == 21) || (highestScore == 0)
+		if ((dealer.getDealerHand().getScore() == 21 && highestScore != 21) || (highestScore == 0)
 				|| (dealer.getDealerHand().getScore() >= highestScore && dealer.getDealerHand().getScore() < 21)) {
 			return;
 		} else if (dealer.getDealerHand().getScore() > 21) {
