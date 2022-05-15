@@ -25,8 +25,8 @@ public class TopWinnerStrategy implements DealerStrategy {
 		int bestNetWins = 0;
 		Hand topWinner = null;
 		for (Player player : players) {
-			if (player.getNetWins() > bestNetWins) {
-				bestNetWins = player.getNetWins();
+			if ((player.getNumWins() - player.getNumLosses()) > bestNetWins) {
+				bestNetWins = (player.getNumWins() - player.getNumLosses());
 				topWinner = player.getHand();
 			}
 		}

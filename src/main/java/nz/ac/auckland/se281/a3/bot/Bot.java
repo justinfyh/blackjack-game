@@ -17,10 +17,6 @@ public class Bot extends Player {
 		this.strategy = strategy;
 	}
 
-//	public Action play() {
-//		return strategy.play();
-//	}
-
 	@Override
 	public Action decideAction(Hand hand) {
 		// return the action depending on the strategy chosen
@@ -32,5 +28,4 @@ public class Bot extends Player {
 		// return a bet depending on the strategy chosen
 		return strategy.makeABet();
 	}
-
 }

@@ -7,7 +7,7 @@ package nz.ac.auckland.se281.a3;
  */
 public abstract class Player extends Participant {
 
-	private int netWins;
+//	private int netWins;
 	private int numLosses;
 	private boolean winStatus;
 	private int numWins;
@@ -15,8 +15,9 @@ public abstract class Player extends Participant {
 	// constructor
 	public Player(String name) {
 		super(name);
-		netWins = 0;
+//		netWins = 0;
 		numWins = 0;
+		numLosses = 0;
 	}
 
 	public int getNumWins() {
@@ -43,13 +44,13 @@ public abstract class Player extends Participant {
 		this.winStatus = winStatus;
 	}
 
-	public int getNetWins() {
-		return netWins;
-	}
-
-	public void setNetWins(int netWins) {
-		this.netWins = netWins;
-	}
+//	public int getNetWins() {
+//		return netWins;
+//	}
+//
+//	public void setNetWins(int netWins) {
+//		this.netWins = netWins;
+//	}
 
 	public abstract int makeABet();
 

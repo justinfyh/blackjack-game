@@ -83,12 +83,15 @@ public class BlackJack {
 	 * TODO This method initializes the Bots, you should change this method for
 	 * Task1
 	 */
+	/**
+	 * gets the specified bot strategy from the user and creates a strategy instance
+	 * of the chosen strategy, then creates instances of the bots and adds them onto
+	 * the list array
+	 */
 	protected void initBots() {
 		String botStrategyString = getBotStrategy(); // UNCOMMENT THIS
 
 		BotStrategy strategy = StrategyFactory.createStrategy(botStrategyString);
-
-//		System.out.println(botStrategyString);
 
 		Bot bot1 = new Bot("Bot1", strategy);
 		Bot bot2 = new Bot("Bot2", strategy);
@@ -102,6 +105,10 @@ public class BlackJack {
 	 * TODO This method initializes the Dealer, you should change this method for
 	 * Task2
 	 */
+	/**
+	 * creates instance of the initial dealer strategy and creates the dealer
+	 * instance
+	 */
 	protected void initDealer() {
 		// set the initial strategy using the Strategy pattern
 		DealerStrategy strategy = new HighestBidderStrategy();
@@ -112,18 +119,25 @@ public class BlackJack {
 	 * TODO This method prints and updates the results (wins and losses) you should
 	 * change this method for Task 2 and Task 3
 	 */
+	/**
+	 * updates the wins and losses for each player, then updates the dealer strategy
+	 * using the highest net wins. prints the stats for the round
+	 * 
+	 * @param round current round number
+	 */
 	protected void printAndUpdateResults(int round) {
 
-		getRoundWinner(players);
+		// update the wins and losses of the players
+		updateWinLoss(players);
 
-		// update strategy here?
+		// initialise instance fields
 		int bestNetWins = 0;
 		Hand topWinner = null;
 
 		// find the player with the highest net wins
 		for (Player player : players) {
-			if (player.getNetWins() > bestNetWins) {
-				bestNetWins = player.getNetWins();
+			if (player.getNumWins() - player.getNumLosses() > bestNetWins) {
+				bestNetWins = player.getNumWins() - player.getNumLosses();
 				topWinner = player.getHand();
 			}
 		}
@@ -134,14 +148,11 @@ public class BlackJack {
 			DealerStrategy strategy = new TopWinnerStrategy();
 			dealer.setPlayerHand(topWinner);
 			dealer.setStrategy(strategy);
-//			System.out.println("Topwinner: " + topWinner);
-//			System.out.println("TWS");
 		}
 		// otherwise set the strategy to target the highest bidder
 		else {
 			DealerStrategy strategy = new HighestBidderStrategy();
 			dealer.setStrategy(strategy);
-//			System.out.println("HBS");
 		}
 
 		// PRINT ROUND STATS
@@ -153,15 +164,18 @@ public class BlackJack {
 			System.out.println("Round " + round + ": " + player.getName() + " " + winLose + " "
 					+ player.getHand().getBet() + " chips");
 		}
-
 	}
 
 	// function to get the winner of the round
-	public void getRoundWinner(List<Player> players) {
-//		this.players = players;
+	/**
+	 * using the players list, updates each player's wins and losses based on their
+	 * scores and the dealer's score
+	 * 
+	 * @param players list containing all instances of the players
+	 */
+	public void updateWinLoss(List<Player> players) {
 
-		// this does not account for if two players win so both will need a score of +1
-//		List<Player> roundWinners;
+		// initialise instance fields
 		int highestScore = 0;
 
 		// loop through the players to get the highest score
@@ -169,40 +183,33 @@ public class BlackJack {
 			if ((player.getHand().getScore() > highestScore) && (player.getHand().getScore() <= 21)) {
 				highestScore = player.getHand().getScore();
 			}
-			// assume that all players lost so -1 from all net wins
-			player.setNetWins(player.getNetWins() - 1);
+			// assume that all players lost so +1 to all losses and set win status to false
 			player.setNumLosses(player.getNumLosses() + 1);
 			player.setWinStatus(false);
-//			System.out.println("rwWins: " + player.getNetWins());
 		}
 
-		if (dealer.getDealerHand().getScore() == 21 && highestScore == 21
-				&& dealer.getDealerHand().getCards().size() > 2) {
-			return;
-		}
-
-		// conditionals to adjust net wins
+		// conditionals to adjust wins and losses
+		// any cases where the dealer wins/players get busted, exit the update
 		if ((dealer.getDealerHand().getScore() == 21 && highestScore != 21) || (highestScore == 0)
-				|| (dealer.getDealerHand().getScore() >= highestScore && dealer.getDealerHand().getScore() < 21)) {
+				|| (dealer.getDealerHand().getScore() >= highestScore && dealer.getDealerHand().getScore() < 21)
+				|| (dealer.getDealerHand().getScore() == 21 && highestScore == 21
+						&& dealer.getDealerHand().getCards().size() > 2)) {
 			return;
 		} else if (dealer.getDealerHand().getScore() > 21) {
+			// if the dealer is busted, then all players win
 			for (Player player : players) {
-				player.setNetWins(player.getNetWins() + 2);
 				player.setNumLosses(player.getNumLosses() - 1);
 				player.setNumWins(player.getNumWins() + 1);
 				player.setWinStatus(true);
 			}
 			return;
 		} else {
-			// if the dealer busts, all wins
-			// adjust for all losing
+			// players with highest score wins
 			for (Player player : players) {
 				if ((player.getHand().getScore() == highestScore) && (dealer.getDealerHand().getScore() != 21)) {
-					player.setNetWins(player.getNetWins() + 2);
 					player.setNumLosses(player.getNumLosses() - 1);
 					player.setNumWins(player.getNumWins() + 1);
 					player.setWinStatus(true);
-					System.out.println("rwWins: " + player.getNetWins());
 				}
 			}
 		}
@@ -210,15 +217,15 @@ public class BlackJack {
 		return;
 
 	}
-	// win = rounds - netwins
 
 	/**
 	 * TODO This method should print the statistic of the game when it ends
 	 */
+	/**
+	 * prints the end of game statistics once the game has been terminated
+	 */
 	protected void printGameStatistics() {
 		for (Player player : players) {
-//			int numLoss = player.getNumWins() - 
-
 			System.out.println(player.getName() + " won " + player.getNumWins() + " times and lost "
 					+ player.getNumLosses() + " times");
 		}

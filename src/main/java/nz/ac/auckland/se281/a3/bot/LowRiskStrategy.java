@@ -8,12 +8,6 @@ import nz.ac.auckland.se281.a3.Participant.Action;
 public class LowRiskStrategy implements BotStrategy {
 
 	@Override
-	public Action play() {
-		return null;
-
-	}
-
-	@Override
 	public Action decideAction(Hand hand) {
 		// get the current score of the bot using hand parameter
 		int score = hand.getScore();
@@ -30,7 +24,7 @@ public class LowRiskStrategy implements BotStrategy {
 	public int makeABet() {
 		// generate a random integer between 10 and 50
 		float randomNumber = new Random().nextInt(50 - 10) + 10;
-//		System.out.println((int) randomNumber);
+
 		// return the integer as the bet
 		return (int) randomNumber;
 	}
