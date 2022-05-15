@@ -116,15 +116,17 @@ public class BlackJack {
 
 		// update strategy here?
 		int bestNetWins = 0;
+		Hand topWinner = null;
 		for (Player player : players) {
 			if (player.getNetWins() > bestNetWins) {
 				bestNetWins = player.getNetWins();
+				topWinner = player.getHand();
 			}
-
 		}
 
 		if (bestNetWins > 2) {
 			DealerStrategy strategy = new TopWinnerStrategy();
+			dealer.setPlayerHand(topWinner);
 			dealer.setStrategy(strategy);
 		} else {
 			DealerStrategy strategy = new HighestBidderStrategy();

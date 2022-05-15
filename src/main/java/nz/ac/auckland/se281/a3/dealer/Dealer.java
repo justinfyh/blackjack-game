@@ -16,6 +16,7 @@ public class Dealer extends Participant {
 
 	private DealerStrategy strategy;
 	private List<Player> players;
+	private Hand playerHand;
 
 	public Dealer(String name, DealerStrategy strategy, List<Player> players) {
 		super(name);
@@ -26,10 +27,16 @@ public class Dealer extends Participant {
 	@Override
 	public Action decideAction(Hand dealerHand) {
 
-		Hand playerHand = getHighestBet();
+		if (strategy instanceof HighestBidderStrategy) {
+			playerHand = getHighestBet();
+		}
 
 //		System.out.println("Highest bet: " + hand);
 		return strategy.decideAction(dealerHand, playerHand);
+	}
+
+	public void setPlayerHand(Hand playerHand) {
+		this.playerHand = playerHand;
 	}
 
 	public void setStrategy(DealerStrategy strategy) {
