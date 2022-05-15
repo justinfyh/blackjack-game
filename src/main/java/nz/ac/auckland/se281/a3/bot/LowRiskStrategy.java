@@ -1,5 +1,7 @@
 package nz.ac.auckland.se281.a3.bot;
 
+import java.util.Random;
+
 import nz.ac.auckland.se281.a3.Hand;
 import nz.ac.auckland.se281.a3.Participant.Action;
 
@@ -26,6 +28,8 @@ public class LowRiskStrategy implements BotStrategy {
 	@Override
 	public int makeABet() {
 		// TODO Auto-generated method stub
-		return 0;
+		float randomNumber = new Random().nextInt(50 - 10) + 10;
+		System.out.println((int) randomNumber);
+		return (int) randomNumber;
 	}
 }
