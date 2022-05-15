@@ -24,8 +24,9 @@ public class RandomStrategy implements BotStrategy {
 	@Override
 	public int makeABet() {
 		// TODO Auto-generated method stub
-		float randomNumber = new Random().nextFloat();
-		return (int) (randomNumber * 100);
+		float randomNumber = new Random().nextInt(100 - 1) + 1;
+		System.out.println((int) randomNumber);
+		return (int) randomNumber;
 	}
 
 }
