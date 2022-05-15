@@ -11,6 +11,7 @@ import nz.ac.auckland.se281.a3.Player;
  * You should change this class for Task 2
  *
  */
+
 public class Dealer extends Participant {
 
 	private DealerStrategy strategy;
@@ -23,23 +24,25 @@ public class Dealer extends Participant {
 	}
 
 	@Override
-	public Action decideAction(Hand hand) {
+	public Action decideAction(Hand dealerHand) {
 
-		int bet = getHighestBet();
+		Hand playerHand = getHighestBet();
 
-		System.out.println("Highest bet: " + bet);
-		return strategy.decideAction(hand);
+//		System.out.println("Highest bet: " + hand);
+		return strategy.decideAction(dealerHand, playerHand);
 	}
 
-	private int getHighestBet() {
+	private Hand getHighestBet() {
 		// TODO Auto-generated method stub
 		int betHigh = 0;
+		Hand hand = null;
 		for (Player player : players) {
 			if (player.getHand().getBet() > betHigh) {
 				betHigh = player.getHand().getBet();
+				hand = player.getHand();
 			}
 		}
-		return betHigh;
+		return hand;
 	}
 
 }

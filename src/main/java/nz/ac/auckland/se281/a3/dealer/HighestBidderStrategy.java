@@ -6,10 +6,12 @@ import nz.ac.auckland.se281.a3.Participant.Action;
 public class HighestBidderStrategy implements DealerStrategy {
 
 	@Override
-	public Action decideAction(Hand hand) {
+	public Action decideAction(Hand dealerHand, Hand playerHand) {
 		// TODO Auto-generated method stub
-//		List<Integer> bets;
-//		bets = getBetAmounts(players);
+
+		if (playerHand.isBust()) {
+			return Action.HOLD;
+		}
 
 		return null;
 	}
