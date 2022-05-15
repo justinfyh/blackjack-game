@@ -8,11 +8,23 @@ public class RandomStrategy implements BotStrategy {
 
 	@Override
 	public Action play() {
+		return null;
+	}
+
+	@Override
+	public Action decideAction() {
+		// TODO Auto-generated method stub
 		float randomNumber = new Random().nextFloat();
 		if (randomNumber <= 0.5) {
 			return Action.HIT;
 		}
 		return Action.HOLD;
+	}
+
+	@Override
+	public Action makeABet() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

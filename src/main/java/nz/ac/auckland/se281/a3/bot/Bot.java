@@ -10,9 +10,9 @@ public class Bot extends Player {
 
 	private BotStrategy strategy;
 
-	public Bot(String name, String botStrategyString) {
+	public Bot(String name, BotStrategy strategy) {
 		super(name);
-		this.strategy = botStrategyString;
+		this.strategy = strategy;
 	}
 
 	public Action play() {
@@ -21,7 +21,7 @@ public class Bot extends Player {
 
 	@Override
 	public Action decideAction(Hand hand) {
-		return Action.HOLD;
+		return strategy.decideAction();
 	}
 
 	@Override

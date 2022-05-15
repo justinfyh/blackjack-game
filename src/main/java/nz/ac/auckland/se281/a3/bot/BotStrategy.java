@@ -6,4 +6,8 @@ public interface BotStrategy {
 
 	Action play();
 
+	Action decideAction();
+
+	Action makeABet();
+
 }
