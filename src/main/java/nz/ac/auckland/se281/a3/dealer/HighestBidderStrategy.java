@@ -9,11 +9,12 @@ public class HighestBidderStrategy implements DealerStrategy {
 	public Action decideAction(Hand dealerHand, Hand playerHand) {
 		// TODO Auto-generated method stub
 
-		if (playerHand.isBust()) {
+		if (playerHand.isBust() || (playerHand.isBlackJack() && dealerHand.getScore() >= 17)
+				|| (playerHand.getScore() <= dealerHand.getScore())) {
 			return Action.HOLD;
 		}
 
-		return null;
+		return Action.HIT;
 	}
 
 }

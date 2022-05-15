@@ -9,4 +9,5 @@ import nz.ac.auckland.se281.a3.Participant.Action;
 public interface DealerStrategy {
 
 	public Action decideAction(Hand dealerHand, Hand playerHand);
+
 }
