@@ -29,9 +29,12 @@ public class Dealer extends Participant {
 
 		if (strategy instanceof HighestBidderStrategy) {
 			playerHand = getHighestBet();
+		} else {
+			playerHand = getTopWinner();
 		}
 
 //		System.out.println("Highest bet: " + hand);
+
 		return strategy.decideAction(dealerHand, playerHand);
 	}
 
@@ -58,6 +61,18 @@ public class Dealer extends Participant {
 			}
 		}
 		return hand;
+	}
+
+	private Hand getTopWinner() {
+		int bestNetWins = 0;
+		Hand topWinner = null;
+		for (Player player : players) {
+			if (player.getNetWins() > bestNetWins) {
+				bestNetWins = player.getNetWins();
+				topWinner = player.getHand();
+			}
+		}
+		return topWinner;
 	}
 
 }

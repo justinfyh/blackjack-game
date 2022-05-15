@@ -114,6 +114,8 @@ public class BlackJack {
 	 */
 	protected void printAndUpdateResults(int round) {
 
+		getRoundWinner(players);
+
 		// update strategy here?
 		int bestNetWins = 0;
 		Hand topWinner = null;
@@ -124,16 +126,35 @@ public class BlackJack {
 			}
 		}
 
-		if (bestNetWins > 2) {
+		if (bestNetWins >= 2) {
 			DealerStrategy strategy = new TopWinnerStrategy();
 			dealer.setPlayerHand(topWinner);
 			dealer.setStrategy(strategy);
+			System.out.println("Topwinner: " + topWinner.getScore());
+			System.out.println("TWS");
 		} else {
 			DealerStrategy strategy = new HighestBidderStrategy();
 			dealer.setStrategy(strategy);
+			System.out.println("HBS");
 		}
 
-		Player roundWinner = Player.getRoundWinner(players);
+	}
+
+	public Player getRoundWinner(List<Player> players) {
+//		this.players = players;
+		Player roundWinner = players.get(0);
+		for (Player player : players) {
+			if (player.getHand().getScore() > roundWinner.getHand().getScore() && player.getHand().getScore() <= 21) {
+				roundWinner = player;
+
+			}
+			player.setNetWins(player.getNetWins() - 1);
+		}
+
+		roundWinner.setNetWins(roundWinner.getNetWins() + 2);
+		System.out.println("rwWins: " + roundWinner.getNetWins());
+
+		return roundWinner;
 
 	}
 

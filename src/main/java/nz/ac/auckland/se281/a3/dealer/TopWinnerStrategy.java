@@ -8,7 +8,13 @@ public class TopWinnerStrategy implements DealerStrategy {
 	@Override
 	public Action decideAction(Hand dealerHand, Hand playerHand) {
 		// TODO Auto-generated method stub
-		return null;
+
+		if (playerHand.isBust() || (playerHand.isBlackJack() && dealerHand.getScore() >= 17)
+				|| (playerHand.getScore() <= dealerHand.getScore())) {
+			return Action.HOLD;
+		}
+
+		return Action.HIT;
 	}
 
 }

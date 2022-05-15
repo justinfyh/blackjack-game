@@ -17,21 +17,6 @@ public abstract class Player extends Participant {
 		netWins = 0;
 	}
 
-	public static Player getRoundWinner(List<Player> players) {
-//		this.players = players;
-		Player roundWinner = players.get(0);
-		for (Player player : players) {
-			if (player.getHand().getScore() > roundWinner.getHand().getScore() || player.getHand().getScore() <= 21) {
-				roundWinner = player;
-			}
-		}
-
-		roundWinner.netWins++;
-
-		return roundWinner;
-
-	}
-
 	public int getNetWins() {
 		return netWins;
 	}
