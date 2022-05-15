@@ -15,9 +15,10 @@ public class LowRiskStrategy implements BotStrategy {
 
 	@Override
 	public Action decideAction(Hand hand) {
-		// TODO Auto-generated method stub
+		// get the current score of the bot using hand parameter
 		int score = hand.getScore();
 
+		// if its score is >= 17, then return hold, otherwise return hit
 		if (score >= 17) {
 			return Action.HOLD;
 		}
@@ -27,9 +28,10 @@ public class LowRiskStrategy implements BotStrategy {
 
 	@Override
 	public int makeABet() {
-		// TODO Auto-generated method stub
+		// generate a random integer between 10 and 50
 		float randomNumber = new Random().nextInt(50 - 10) + 10;
 		System.out.println((int) randomNumber);
+		// return the integer as the bet
 		return (int) randomNumber;
 	}
 }

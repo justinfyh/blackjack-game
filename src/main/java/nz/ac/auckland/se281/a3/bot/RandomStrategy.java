@@ -14,8 +14,10 @@ public class RandomStrategy implements BotStrategy {
 
 	@Override
 	public Action decideAction(Hand hand) {
-		// TODO Auto-generated method stub
+		// generate a random float number
 		float randomNumber = new Random().nextFloat();
+
+		// if that number is <= 0.5, then return hit, otherwise return hold
 		if (randomNumber <= 0.5) {
 			return Action.HIT;
 		}
@@ -24,9 +26,10 @@ public class RandomStrategy implements BotStrategy {
 
 	@Override
 	public int makeABet() {
-		// TODO Auto-generated method stub
+		// generate a random integer between 1 and 100
 		float randomNumber = new Random().nextInt(100 - 1) + 1;
 		System.out.println((int) randomNumber);
+		// return the integer as the bet
 		return (int) randomNumber;
 	}
 

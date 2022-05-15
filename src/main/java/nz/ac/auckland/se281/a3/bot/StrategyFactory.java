@@ -3,6 +3,7 @@ package nz.ac.auckland.se281.a3.bot;
 public class StrategyFactory {
 
 	public static BotStrategy createStrategy(String botStrategyString) {
+		// create an instance of a strategy depending on the user input
 		switch (botStrategyString) {
 		case "R":
 			return new RandomStrategy();
