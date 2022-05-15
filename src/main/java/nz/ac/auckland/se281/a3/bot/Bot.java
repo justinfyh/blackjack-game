@@ -21,7 +21,7 @@ public class Bot extends Player {
 
 	@Override
 	public Action decideAction(Hand hand) {
-		return strategy.decideAction();
+		return strategy.decideAction(hand);
 	}
 
 	@Override
