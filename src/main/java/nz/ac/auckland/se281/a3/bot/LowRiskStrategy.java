@@ -30,7 +30,7 @@ public class LowRiskStrategy implements BotStrategy {
 	public int makeABet() {
 		// generate a random integer between 10 and 50
 		float randomNumber = new Random().nextInt(50 - 10) + 10;
-		System.out.println((int) randomNumber);
+//		System.out.println((int) randomNumber);
 		// return the integer as the bet
 		return (int) randomNumber;
 	}

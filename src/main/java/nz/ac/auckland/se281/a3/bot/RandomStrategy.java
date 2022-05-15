@@ -28,7 +28,7 @@ public class RandomStrategy implements BotStrategy {
 	public int makeABet() {
 		// generate a random integer between 1 and 100
 		float randomNumber = new Random().nextInt(100 - 1) + 1;
-		System.out.println((int) randomNumber);
+//		System.out.println((int) randomNumber);
 		// return the integer as the bet
 		return (int) randomNumber;
 	}

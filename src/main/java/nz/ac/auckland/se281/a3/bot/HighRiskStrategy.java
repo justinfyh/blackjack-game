@@ -29,7 +29,7 @@ public class HighRiskStrategy implements BotStrategy {
 	public int makeABet() {
 		// generate a random integer between 50 and 100
 		float randomNumber = new Random().nextInt(100 - 50) + 50;
-		System.out.println((int) randomNumber);
+//		System.out.println((int) randomNumber);
 		// return the integer as the bet
 		return (int) randomNumber;
 	}
