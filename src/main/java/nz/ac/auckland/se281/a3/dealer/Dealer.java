@@ -14,11 +14,13 @@ import nz.ac.auckland.se281.a3.Player;
 
 public class Dealer extends Participant {
 
+	// declare instance fields
 	private DealerStrategy strategy;
 	private List<Player> players;
 	private Hand playerHand;
 	private Hand dealerHand;
 
+	// constructor for the Dealer object
 	public Dealer(String name, DealerStrategy strategy, List<Player> players) {
 		super(name);
 		this.strategy = strategy;
@@ -28,28 +30,33 @@ public class Dealer extends Participant {
 	@Override
 	public Action decideAction(Hand dealerHand) {
 
+		// set the instance of the dealer's hand
 		this.dealerHand = dealerHand;
 
+		// set the instance of the player's hand
 		playerHand = strategy.getTargetPlayer(players);
 
-		return strategy.decideAction(dealerHand, playerHand);
+		// get the action using the strategy, and both hand instances
+		return strategy.decideAction(this.dealerHand, playerHand);
 	}
 
+	// getter for the current dealer strategy
 	public DealerStrategy getStrategy() {
 		return strategy;
 	}
 
+	// getter for the dealer's hand
 	public Hand getDealerHand() {
-		// TODO Auto-generated method stub
 		return this.getHand();
 	}
 
+	// setter for the player's hand
 	public void setPlayerHand(Hand playerHand) {
 		this.playerHand = playerHand;
 	}
 
+	// setter for the dealer strategy
 	public void setStrategy(DealerStrategy strategy) {
 		this.strategy = strategy;
 	}
-
 }

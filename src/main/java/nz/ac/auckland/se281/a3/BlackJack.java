@@ -89,10 +89,13 @@ public class BlackJack {
 	 * the list array
 	 */
 	protected void initBots() {
-		String botStrategyString = getBotStrategy(); // UNCOMMENT THIS
+		// get the user input for the bot strategy choice
+		String botStrategyString = getBotStrategy();
 
+		// create new strategy instance using the factory
 		BotStrategy strategy = StrategyFactory.createStrategy(botStrategyString);
 
+		// create new instances of bots
 		Bot bot1 = new Bot("Bot1", strategy);
 		Bot bot2 = new Bot("Bot2", strategy);
 
@@ -110,8 +113,10 @@ public class BlackJack {
 	 * instance
 	 */
 	protected void initDealer() {
-		// set the initial strategy using the Strategy pattern
+		// set the initial strategy
 		DealerStrategy strategy = new HighestBidderStrategy();
+
+		// create instance of the dealer
 		dealer = new Dealer("Dealer", strategy, players);
 	}
 
@@ -204,7 +209,7 @@ public class BlackJack {
 			}
 			return;
 		} else {
-			// players with highest score wins
+			// otherwise, player(s) with highest score wins
 			for (Player player : players) {
 				if ((player.getHand().getScore() == highestScore) && (dealer.getDealerHand().getScore() != 21)) {
 					player.setNumLosses(player.getNumLosses() - 1);
@@ -225,6 +230,7 @@ public class BlackJack {
 	 * prints the end of game statistics once the game has been terminated
 	 */
 	protected void printGameStatistics() {
+		// for all players, print their end of game statistics
 		for (Player player : players) {
 			System.out.println(player.getName() + " won " + player.getNumWins() + " times and lost "
 					+ player.getNumLosses() + " times");
