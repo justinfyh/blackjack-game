@@ -47,7 +47,7 @@ import nz.ac.auckland.se281.a3.bot.Bot;
 @SuiteClasses({ BlackJackTestSuite.Task1Test.class, //
 		BlackJackTestSuite.Task2Test.class, //
 		BlackJackTestSuite.Task3Test.class, //
-// BlackJackTestSuite.YourTest.class //
+		BlackJackTestSuite.YourTest.class //
 })
 
 public class BlackJackTestSuite {
@@ -845,7 +845,99 @@ public class BlackJackTestSuite {
 
 	@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 	public static class YourTest extends TaskTest {
+		BlackJack blackJack;
 
+		@Before
+		public void setUp() {
+			super.setUp();
+			blackJack = new BlackJack();
+		}
+
+		private void sanityCheck() {
+			// make sure that you don't have change the order of players in the list
+			assertEquals("We should have three players, a human and two bots", 3, blackJack.getPlayers().size());
+			assertTrue("the first player should be human", blackJack.getPlayers().get(0) instanceof Human);
+			assertTrue("the second player should be a bot", blackJack.getPlayers().get(1) instanceof Bot);
+			assertTrue("the third player should be a bot", blackJack.getPlayers().get(2) instanceof Bot);
+		}
+
+		@Test
+		public void YT_01_lowrisk_bet_less_equal_50() {
+			scanner = new Scanner("LR");
+			blackJack.initBots();
+			sanityCheck();
+
+			for (int i = 0; i < 1000; i++) {
+				for (int index : Arrays.asList(1, 2)) { // need to check list position 1 and 2
+					int bet = blackJack.getPlayers().get(index).makeABet();
+					if (bet > 50) {
+						fail("the bet should be less than fifty");
+					}
+				}
+			}
+		}
+
+		@Test
+		public void YT_02_highrisk_bet_less_equal_100() {
+			scanner = new Scanner("HR");
+			blackJack.initBots();
+			sanityCheck();
+
+			for (int i = 0; i < 1000; i++) {
+				for (int index : Arrays.asList(1, 2)) { // need to check list position 1 and 2
+					int bet = blackJack.getPlayers().get(index).makeABet();
+					if (bet > 100) {
+						fail("the bet should be less than 100");
+					}
+				}
+			}
+		}
+
+		@Test
+		public void YT_03_player_should_lose_busted_dealer_busted() {
+			BlackJack blackJack = new BlackJack(
+					// first round
+					new Card(KING, CLUBS), new Card(ACE, HEARTS), // human wins
+					new Card(JACK, CLUBS), new Card(SIX, HEARTS), new Card(TEN, HEARTS), // BOT BUSTED
+					new Card(ACE, HEARTS), new Card(JACK, SPADES), // BOT blackjack
+					new Card(KING, SPADES), new Card(TWO, CLUBS), new Card(QUEEN, CLUBS), // dealer busted
+					// second round
+					new Card(KING, CLUBS), new Card(ACE, HEARTS), // human wins
+					new Card(JACK, CLUBS), new Card(SIX, HEARTS), new Card(TEN, HEARTS), // BOT BUSTED
+					new Card(JACK, CLUBS), new Card(SIX, HEARTS), new Card(TEN, HEARTS), // BOT BUSTED
+					new Card(KING, SPADES), new Card(TWO, CLUBS), new Card(QUEEN, CLUBS), // dealer busted
+					// third round
+					new Card(KING, CLUBS), new Card(ACE, HEARTS), // human wins
+					new Card(JACK, CLUBS), new Card(EIGHT, HEARTS), // 18
+					new Card(JACK, HEARTS), new Card(NINE, SPADES), // 19
+					new Card(KING, SPADES), new Card(TEN, HEARTS), new Card(ACE, CLUBS) // dealer busted
+			);
+			runCommands(blackJack, "LR",
+					// first round
+					"100", " ", " ", " ", "yes",
+					// second round
+					"100", " ", " ", " ", "yes",
+					// third round dealer strategy should be changed
+					// the human is not the top bidder, but should be still targeted by the dealer
+					"1", "hold", " ", " ", " ", "no");
+			assertContains("Round 1: Dealer #1 HIT");
+			assertDoesNotContain("Round 1: Dealer #1 HOLD");
+			assertContains("Round 1: Dealer's score is: 22");
+			assertContains("Round 2: Dealer #1 HIT");
+			assertDoesNotContain("Round 2: Dealer #1 HOLD");
+			assertContains("Round 2: Dealer's score is: 22");
+			assertContains("Round 2: Bot1 lost");
+			assertContains("Round 2: Bot2 lost");
+			assertDoesNotContain("Round 2: Bot1 won");
+			// the dealer should change strategy and target the human even if it is not the
+			// highest bidder
+//			for (int i = 1; i <= 5; i++) {
+//				assertContains(String.format("Round 3: Dealer #1 HIT"));
+			assertContains(String.format("Round 3: Dealer #1 HOLD"));
+//		}
+
+//			assertContains("Round 3: Dealer's score is: 21");
+		}
 	}
 
 }

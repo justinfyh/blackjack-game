@@ -203,9 +203,12 @@ public class BlackJack {
 		} else if (dealer.getDealerHand().getScore() > 21) {
 			// if the dealer is busted, then all players win
 			for (Player player : players) {
-				player.setNumLosses(player.getNumLosses() - 1);
-				player.setNumWins(player.getNumWins() + 1);
-				player.setWinStatus(true);
+				// except for players who are busted
+				if (player.getHand().getScore() <= 21) {
+					player.setNumLosses(player.getNumLosses() - 1);
+					player.setNumWins(player.getNumWins() + 1);
+					player.setWinStatus(true);
+				}
 			}
 			return;
 		} else {
