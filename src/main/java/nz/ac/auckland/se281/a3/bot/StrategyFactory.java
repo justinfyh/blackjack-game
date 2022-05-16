@@ -21,6 +21,7 @@ public class StrategyFactory {
 		case "HR":
 			return new HighRiskStrategy();
 
+		// print error message if not valid strategy
 		default:
 			System.err.println("not a strategy type");
 			System.exit(0);
