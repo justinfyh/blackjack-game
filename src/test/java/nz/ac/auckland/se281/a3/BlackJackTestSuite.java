@@ -933,10 +933,117 @@ public class BlackJackTestSuite {
 			// highest bidder
 //			for (int i = 1; i <= 5; i++) {
 //				assertContains(String.format("Round 3: Dealer #1 HIT"));
-			assertContains(String.format("Round 3: Dealer #1 HOLD"));
+//			assertContains(String.format("Round 3: Dealer #1 HOLD"));
 //		}
 
 //			assertContains("Round 3: Dealer's score is: 21");
+		}
+
+		@Test
+		public void YT_04_player1_should_lose_blackjack_dealer_blackjack() {
+			BlackJack blackJack = new BlackJack(
+					// first round
+					new Card(KING, CLUBS), new Card(ACE, HEARTS), // human blackjack
+					new Card(JACK, CLUBS), new Card(SIX, HEARTS), new Card(TEN, HEARTS), // BOT BUSTED
+					new Card(JACK, CLUBS), new Card(SIX, HEARTS), new Card(TEN, HEARTS), // BOT BUSTED
+					new Card(KING, SPADES), new Card(ACE, CLUBS) // dealer wins with blackjack
+			);
+			runCommands(blackJack, "LR",
+					// first round
+					"100", " ", " ", " ", "no");
+
+			assertContains("Round 1: Player1 lost");
+			assertContains("Round 1: Bot1 lost");
+			assertContains("Round 1: Bot2 lost");
+			assertDoesNotContain("Round 1: Player1 won");
+
+		}
+
+		@Test
+		public void YT_05_players_should_lose_blackjack_dealer_blackjack() {
+			BlackJack blackJack = new BlackJack(
+					// first round
+					new Card(KING, CLUBS), new Card(ACE, HEARTS), // human blackjack
+					new Card(KING, CLUBS), new Card(ACE, HEARTS), // bot1 blackjack
+					new Card(KING, CLUBS), new Card(ACE, HEARTS), // bot2 blackjack
+					new Card(KING, SPADES), new Card(ACE, CLUBS) // dealer wins with blackjack
+			);
+			runCommands(blackJack, "LR",
+					// first round
+					"100", " ", " ", " ", "no");
+
+			assertContains("Round 1: Player1 lost");
+			assertContains("Round 1: Bot1 lost");
+			assertContains("Round 1: Bot2 lost");
+			assertDoesNotContain("Round 1: Player1 won");
+
+		}
+
+		@Test
+		public void YT_06_players_should_lose_blackjack_dealer_blackjack() {
+			BlackJack blackJack = new BlackJack(
+					// first round
+					new Card(KING, CLUBS), new Card(ACE, HEARTS), // human blackjack
+					new Card(KING, CLUBS), new Card(ACE, HEARTS), // bot1 blackjack
+					new Card(KING, CLUBS), new Card(ACE, HEARTS), // bot2 blackjack
+					new Card(KING, SPADES), new Card(NINE, CLUBS), new Card(TWO, CLUBS) // dealer loses with blackjack
+																						// as cards > 2
+			);
+			runCommands(blackJack, "LR",
+					// first round
+					"100", " ", " ", " ", "no");
+
+			assertContains("Round 1: Player1 won");
+			assertContains("Round 1: Bot1 won");
+			assertContains("Round 1: Bot2 won");
+			assertDoesNotContain("Round 1: Player1 lost");
+			assertDoesNotContain("Round 1: Bot1 lost");
+			assertDoesNotContain("Round 1: Bot2 lost");
+
+		}
+
+		@Test
+		public void YT_07_players_should_lose_blackjack_dealer_blackjack() {
+			BlackJack blackJack = new BlackJack(
+					// first round
+					new Card(KING, CLUBS), new Card(FIVE, HEARTS), new Card(SEVEN, HEARTS), // human busted
+					new Card(KING, CLUBS), new Card(FIVE, HEARTS), new Card(SEVEN, HEARTS), // bot1 busted
+					new Card(KING, CLUBS), new Card(FIVE, HEARTS), new Card(SEVEN, HEARTS), // bot2 busted
+					new Card(KING, SPADES), new Card(FIVE, CLUBS), new Card(SEVEN, HEARTS) // dealer busted but wins
+			);
+			runCommands(blackJack, "LR",
+					// first round
+					"100", "hit", " ", " ", " ", "no");
+
+			assertContains("Round 1: Player1 lost");
+			assertContains("Round 1: Bot1 lost");
+			assertContains("Round 1: Bot2 lost");
+			assertDoesNotContain("Round 1: Player1 won");
+			assertDoesNotContain("Round 1: Bot1 won");
+			assertDoesNotContain("Round 1: Bot2 won");
+
+		}
+
+		@Test
+		public void YT_08_players_should_lose_blackjack_dealer_blackjack() {
+			BlackJack blackJack = new BlackJack(
+					// first round
+					new Card(TWO, CLUBS), new Card(TWO, HEARTS), // human busted
+					new Card(TWO, CLUBS), new Card(FIVE, HEARTS), // bot1 busted
+					new Card(KING, CLUBS), new Card(FIVE, HEARTS), // bot2 busted
+					new Card(TWO, SPADES), new Card(TWO, CLUBS) // dealer busted but wins
+			);
+			runCommands(blackJack, "LR",
+					// first round
+					"100", "hold", " ", " ", " ", "no");
+
+			assertContains("Round 1: Player1 lost");
+			assertContains("Round 1: Bot1 lost");
+			assertContains("Round 1: Bot2 won");
+			assertDoesNotContain("Round 1: Player1 won");
+			assertDoesNotContain("Round 1: Bot1 won");
+			assertDoesNotContain("Round 1: Bot2 lost");
+
 		}
 	}
 
